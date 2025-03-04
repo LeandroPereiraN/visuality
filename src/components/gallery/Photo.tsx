@@ -26,7 +26,7 @@ export const Photo = ({ photo }: PhotoProps) => {
         onLoad={() => setImageLoaded(true)}
       />
 
-      <BtnLike id={photo.id} mediaItem={"Photos"} />
+      <BtnLike media={photo} mediaItem={"Photos"} />
 
       <div className="z-1000 absolute bottom-0 flex items-center justify-between gap-2 w-full p-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200">
         <a

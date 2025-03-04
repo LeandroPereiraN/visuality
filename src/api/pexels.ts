@@ -1,5 +1,5 @@
-import type { PexelsPhotos } from "@interfaces/api/photos";
-import type { PexelsVideos } from "@interfaces/api/videos";
+import type { PexelsPhoto, PexelsPhotos } from "@interfaces/api/photos";
+import type { PexelsVideo, PexelsVideos } from "@interfaces/api/videos";
 
 interface Search {
   page?: number,
@@ -33,6 +33,15 @@ export const getPhotosByQuery = async ({ query, page = DEFAULT_PAGE, per_page = 
   return photos;
 }
 
+export const getPhotoById = async ({ id }: { id: number }) => {
+  const apiURL = `http://localhost:4321/api/photos/${id}`
+
+  const photo: PexelsPhoto = await fetch(apiURL)
+    .then((res) => res.json())
+
+  return photo;
+}
+
 export const getVideos = async ({ page = DEFAULT_PAGE, per_page = DEFAULT_PER_PAGE }: Search) => {
   const apiURL = `http://localhost:4321/api/videos/popular?page=${page}&per_page=${per_page}`
 
@@ -49,4 +58,13 @@ export const getVideosByQuery = async ({ query, page = DEFAULT_PAGE, per_page = 
     .then((res) => res.json())
 
   return videos;
+}
+
+export const getVideoById = async ({ id }: { id: number }) => {
+  const apiURL = `http://localhost:4321/api/videos/${id}`
+
+  const video: PexelsVideo = await fetch(apiURL)
+    .then((res) => res.json())
+
+  return video;
 }

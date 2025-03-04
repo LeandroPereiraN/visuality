@@ -21,6 +21,7 @@ export interface PexelsVideo {
   user: User;
   video_files: VideoFile[];
   video_pictures: VideoPicture[];
+  error: string;
 }
 
 interface User {

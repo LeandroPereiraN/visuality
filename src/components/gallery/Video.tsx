@@ -65,7 +65,7 @@ export const Video = ({ video }: VideoProps) => {
 
       {imageLoaded && (
         <>
-          <BtnLike id={video.id} mediaItem={"Videos"} />
+          <BtnLike media={video} mediaItem={"Videos"} />
 
           <div className="z-1000 absolute bottom-0 flex items-center justify-between gap-2 w-full p-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200">
             <a

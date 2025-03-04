@@ -19,6 +19,7 @@ export interface PexelsPhoto {
   src: Src;
   liked: boolean;
   alt: string;
+  error: string;
 }
 
 interface Src {

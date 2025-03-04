@@ -1,14 +1,16 @@
 import { HeartOutline, Heart } from "@components/gallery/icons/HeartIcons";
+import type { PexelsPhoto } from "@definitions/interfaces/api/photos";
+import type { PexelsVideo } from "@definitions/interfaces/api/videos";
 import type { MediaItem } from "@definitions/media";
 import { useLikeMedia } from "@hooks/useLikeMedia";
 
 interface BtnLikeProps {
-  id: number;
+  media: PexelsPhoto | PexelsVideo;
   mediaItem: MediaItem;
 }
 
-export const BtnLike = ({ id, mediaItem }: BtnLikeProps) => {
-  const [liked, toggleLikeMedia] = useLikeMedia({ id, mediaItem });
+export const BtnLike = ({ media, mediaItem }: BtnLikeProps) => {
+  const [liked, toggleLikeMedia] = useLikeMedia({ media, mediaItem });
 
   return (
     <button

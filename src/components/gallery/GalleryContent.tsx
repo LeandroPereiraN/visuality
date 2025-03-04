@@ -10,6 +10,8 @@ export const GalleryContent = () => {
   const searchQuery = useMediaContext(state => state.searchQuery)
 
   const getGalleryTitle = () => {
+    if (mediaItem === "Favorites") return "Favorites";
+
     return searchQuery
       ? `${mediaItem} of ${searchQuery}`
       : `Popular ${mediaItem}`;
