@@ -14,15 +14,13 @@ export const BtnLike = ({ media, mediaItem }: BtnLikeProps) => {
 
   return (
     <button
-      className="z-1000 absolute right-0 top-0 p-4 -translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200 cursor-pointer"
+      className={`p-1.5 md:-translate-y-10 md:opacity-0 group-hover:translate-y-0 group-hover:opacity-100 
+        transition duration-200 cursor-pointer rounded-xl active:scale-80
+        ${liked ? "translate-y-0 opacity-100 md:translate-y-0 md:opacity-100 bg-pink-600 hover:bg-pink-700" : ""}`}
       type="button"
       onClick={toggleLikeMedia}
     >
-      {
-        liked
-          ? <Heart className="h-8 w-8" />
-          : <HeartOutline className="h-8 w-8" />
-      }
+      {liked ? <Heart className="h-8 w-8" /> : <HeartOutline className="h-8 w-8" />}
     </button>
   );
 };

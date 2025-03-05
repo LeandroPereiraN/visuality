@@ -1,9 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-  --color-green-dark: #022D33;
-  --color-green-light: #045E66;
-
   --animate-load: load 1.2s infinite;
 }
 

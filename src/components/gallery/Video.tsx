@@ -3,6 +3,7 @@ import type { PexelsVideo } from "@interfaces/api/videos"
 import { Skeleton } from "./Skeleton";
 import { BtnDownload } from "@components/common/BtnDownload";
 import { BtnLike } from "@components/common/BtnLike";
+import { VideoIcon } from "./icons/MediaIcons";
 
 interface VideoProps {
   video: PexelsVideo;
@@ -28,7 +29,7 @@ export const Video = ({ video }: VideoProps) => {
 
   return (
     <article
-      className="relative w-full overflow-hidden rounded-xl shadow-lg min-h-[550px] before:content-[''] before:z-100 before:absolute before:top-0 before:left-0 before:bg-gradient-to-b before:from-black/25 before:to-transparent before:w-full before:h-24 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:bg-gradient-to-t after:from-black/30 after:to-transparent after:w-full after:h-40 after:opacity-0 hover:after:opacity-100 after:transition-opacity after:duration-300 group"
+      className="relative w-full overflow-hidden rounded-xl shadow-lg min-h-[550px] before:content-[''] before:z-100 before:absolute before:top-0 before:left-0 before:bg-gradient-to-b before:from-black/25 before:to-transparent before:w-full before:h-24 md:before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:bg-gradient-to-t after:from-black/30 after:to-transparent after:w-full after:h-40 md:after:opacity-0 hover:after:opacity-100 after:transition-opacity after:duration-300 group"
       style={{ aspectRatio }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -65,9 +66,12 @@ export const Video = ({ video }: VideoProps) => {
 
       {imageLoaded && (
         <>
-          <BtnLike media={video} mediaItem={"Videos"} />
+          <div className="z-1000 absolute w-full top-0 p-4 flex justify-between items-center">
+            <VideoIcon className="h-8 w-8" />
+            <BtnLike media={video} mediaItem={"Videos"} />
+          </div>
 
-          <div className="z-1000 absolute bottom-0 flex items-center justify-between gap-2 w-full p-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200">
+          <div className="z-1000 absolute bottom-0 flex items-center justify-between gap-2 w-full p-4 md:translate-y-10 md:opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200">
             <a
               href={video.user.url}
               target="_blank"
