@@ -73,6 +73,7 @@ const { search } = Astro.params;
     placeholder="Search for free photos"
     value={search}
     class="w-full placeholder:text-gray-400 placeholder:font-semibold focus:outline-none px-4 bg-transparent font-semibold"
+    autofocus
   />
 
   <button
@@ -97,8 +98,6 @@ const { search } = Astro.params;
     `dropdownButton-${instanceId}`,
   );
   const btnSearch = document.getElementById(`btnSearch-${instanceId}`);
-
-  window.onload = () => inputSearch.focus();
 
   inputSearch.addEventListener("focus", function () {
     const length = inputSearch.value.length;
