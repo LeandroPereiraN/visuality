@@ -98,6 +98,8 @@ const { search } = Astro.params;
   );
   const btnSearch = document.getElementById(`btnSearch-${instanceId}`);
 
+  window.onload = () => inputSearch.focus();
+
   inputSearch.addEventListener("focus", function () {
     const length = inputSearch.value.length;
     inputSearch.setSelectionRange(length, length);
