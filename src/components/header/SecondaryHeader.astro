@@ -10,27 +10,62 @@ const { initialMediaSelected = "photo" } = Astro.props;
 ---
 
 <header
-  class="z-2000 sticky top-0 left-0 w-full bg-white border-b-1 border-gray-300"
+  id="header"
+  class="z-2000 sticky top-0 left-0 w-full bg-white border-b-1 border-gray-300 group/header"
 >
+  <div
+    class="z-3000 absolute w-full md:!hidden transition -translate-y-full duration-150 group-[.open]/header:translate-y-0"
+  >
+    <div class="p-3">
+      <SearchBar initialMediaSelected={initialMediaSelected} />
+    </div>
+  </div>
+
   <nav class="flex justify-center w-full h-20 gap-2">
     <div class="w-full max-w-[1550px] flex items-center gap-5 px-8">
       <div class="flex-1">
         <a href="/" class="text-green-light font-bold text-3xl">Visualify</a>
       </div>
 
-      <div class="w-250">
+      <div class="w-250 hidden md:block">
         <SearchBar initialMediaSelected={initialMediaSelected} />
       </div>
 
-      <div class="flex flex-1 justify-end">
+      <div class="flex flex-1 gap-2 items-center justify-end">
+        <button
+          id="btnMobileSearch"
+          class="p-1 cursor-pointer rounded-full hover:bg-gray-300 transition-colors md:hidden"
+          type="button"
+        >
+          <Icon class="h-9 w-9" name="search" color="#045E66" />
+        </button>
+
         <a
           class="p-1 transition-colors duration-150 hover:bg-gray-200 active:scale-95 rounded-full"
           href="https://github.com/zRyzeh/visualify"
           target="_blank"
         >
-          <Icon class="h-10 w-10" name="github" color="black" />
+          <Icon class="h-9 w-9 md:h-10 md:w-10" name="github" color="black" />
         </a>
       </div>
     </div>
   </nav>
 </header>
+
+<script>
+  const btnMobileSearch = document.getElementById(
+    "btnMobileSearch",
+  ) as HTMLButtonElement;
+
+  const header = document.getElementById("header") as HTMLButtonElement;
+
+  btnMobileSearch.addEventListener("click", () => {
+    header.classList.toggle("open");
+  });
+
+  document.addEventListener("click", (event) => {
+    if (header.contains(event.target as Node)) return;
+
+    header.classList.remove("open");
+  });
+</script>

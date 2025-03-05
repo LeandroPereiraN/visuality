@@ -5,49 +5,51 @@ interface Props {
   initialMediaSelected?: "video" | "photo";
 }
 
+const instanceId = crypto.randomUUID();
 const { initialMediaSelected = "photo" } = Astro.props;
 const { search } = Astro.params;
 ---
 
 <form
-  id="searchForm"
+  id={`searchForm-${instanceId}`}
   role="search"
   autocomplete="off"
   class="flex bg-gray-100 rounded-xl"
 >
-  <div class="relative group">
+  <div class="relative group" id={`dropdownContainer-${instanceId}`}>
     <button
       type="button"
       class="flex items-center gap-2 bg-white p-3 m-1 cursor-pointer rounded-xl hover:bg-gray-300 group-hover:bg-gray-100 font-semibold transition-colors"
+      id={`dropdownButton-${instanceId}`}
     >
       <Icon
-        id="typeIconPhoto"
+        id={`typeIconPhoto-${instanceId}`}
         class:list={["h-4 w-5", { hidden: initialMediaSelected !== "photo" }]}
         name="photo"
         color="gray"
       />
       <Icon
-        id="typeIconVideo"
+        id={`typeIconVideo-${instanceId}`}
         class:list={["h-5 w-5", { hidden: initialMediaSelected !== "video" }]}
         name="video"
         color="gray"
       />
-      <span id="selectedType" class="w-12"
+      <span id={`selectedType-${instanceId}`} class="w-12 hidden md:block"
         >{initialMediaSelected == "photo" ? "Photos" : "Videos"}</span
       >
       <Icon
-        class="h-5 w-5 transition-transform duration-200 rotate-90 group-hover:-rotate-90"
+        class="h-5 w-5 transition-transform duration-200 rotate-90 group-hover:-rotate-90 group-[.active]:-rotate-90"
         name="arrow"
         color="gray"
       />
     </button>
 
-    <div class="absolute left-0 top-12 w-full px-1">
+    <div class="absolute left-0 top-12 w-[8.5rem] px-1 z-10">
       <div
-        class="bg-white rounded-2xl pointer-events-auto invisible opacity-0 transition-all duration-200 -translate-y-4 group-hover:opacity-100 group-hover:visible group-hover:translate-y-3 shadow-lg p-0.5"
+        class="bg-white rounded-2xl opacity-0 -translate-y-4 max-h-0 invisible overflow-hidden transition-all duration-200 shadow-lg p-0.5 group-hover:opacity-100 group-hover:translate-y-3 group-hover:max-h-96 group-hover:visible group-[.active]:opacity-100 group-[.active]:translate-y-3 group-[.active]:max-h-96 group-[.active]:visible"
       >
         <div
-          class="menu-item flex items-center gap-2 hover:bg-gray-300 p-2 mx-1 mt-1 rounded-xl cursor-pointer font-semibold"
+          class=`menu-item-${instanceId} flex items-center gap-2 hover:bg-gray-300 p-2 mx-1 mt-1 rounded-xl cursor-pointer font-semibold`
           data-type="Photos"
         >
           <Icon name="photo" class="w-5 h-4" color="gray" />
@@ -55,7 +57,7 @@ const { search } = Astro.params;
         </div>
 
         <div
-          class="menu-item flex items-center gap-2 hover:bg-gray-300 p-2 mx-1 mb-1 rounded-xl cursor-pointer font-semibold"
+          class=`menu-item-${instanceId} flex items-center gap-2 hover:bg-gray-300 p-2 mx-1 mb-1 rounded-xl cursor-pointer font-semibold`
           data-type="Videos"
         >
           <Icon name="video" class="w-5 h-5" color="gray" />
@@ -66,7 +68,7 @@ const { search } = Astro.params;
   </div>
 
   <input
-    id="inputSearch"
+    id=`inputSearch-${instanceId}`
     type="text"
     placeholder="Search for free photos"
     value={search}
@@ -74,7 +76,6 @@ const { search } = Astro.params;
   />
 
   <button
-    id="btnSearch"
     class="p-3 m-1 cursor-pointer rounded-xl hover:bg-gray-300 transition-colors"
     type="submit"
   >
@@ -82,23 +83,39 @@ const { search } = Astro.params;
   </button>
 </form>
 
-<script>
-  const form = document.getElementById("searchForm") as HTMLFormElement;
-  const inputSearch = document.getElementById(
-    "inputSearch",
-  ) as HTMLInputElement;
-  const typeIconPhoto = document.getElementById("typeIconPhoto") as HTMLElement;
-  const typeIconVideo = document.getElementById("typeIconVideo") as HTMLElement;
-  const selectedType = document.getElementById(
-    "selectedType",
-  ) as HTMLSpanElement;
+<script is:inline define:vars={{ instanceId }}>
+  console.log(instanceId);
 
-  type media = "Videos" | "Photos";
+  const form = document.getElementById(`searchForm-${instanceId}`);
+  const inputSearch = document.getElementById(`inputSearch-${instanceId}`);
+  const typeIconPhoto = document.getElementById(`typeIconPhoto-${instanceId}`);
+  const typeIconVideo = document.getElementById(`typeIconVideo-${instanceId}`);
+  const selectedType = document.getElementById(`selectedType-${instanceId}`);
+  const dropdownContainer = document.getElementById(
+    `dropdownContainer-${instanceId}`,
+  );
+  const dropdownButton = document.getElementById(
+    `dropdownButton-${instanceId}`,
+  );
 
-  document.querySelectorAll<HTMLDivElement>(".menu-item").forEach((item) => {
+  dropdownButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdownContainer.classList.toggle("active");
+  });
+
+  document.addEventListener("click", (e) => {
+    const target = e.target;
+
+    if (!dropdownContainer.contains(target)) {
+      dropdownContainer.classList.remove("active");
+    }
+  });
+
+  document.querySelectorAll(`.menu-item-${instanceId}`).forEach((item) => {
     item.addEventListener("click", () => {
-      const type = item.dataset.type as media;
+      dropdownContainer.classList.remove("active");
 
+      const type = item.dataset.type;
       if (type === "Photos") {
         typeIconPhoto.classList.remove("hidden");
         typeIconVideo.classList.add("hidden");
@@ -110,17 +127,17 @@ const { search } = Astro.params;
       selectedType.textContent = type;
       inputSearch.placeholder = `Search for free ${type.toLowerCase()}`;
     });
+  });
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const searchQuery = inputSearch.value.trim();
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const searchQuery = inputSearch.value.trim();
 
-      if (!searchQuery) return;
+    if (!searchQuery) return;
 
-      const searchType = selectedType.textContent;
-      const basePath = searchType === "Videos" ? "/videos/search/" : "/search/";
+    const searchType = selectedType.textContent;
+    const basePath = searchType === "Videos" ? "/videos/search/" : "/search/";
 
-      window.location.href = `${basePath}${encodeURIComponent(searchQuery)}`;
-    });
+    window.location.href = `${basePath}${encodeURIComponent(searchQuery)}`;
   });
 </script>

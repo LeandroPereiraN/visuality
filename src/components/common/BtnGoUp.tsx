@@ -21,8 +21,8 @@ export const BtnGoUp = () => {
   return (
     <button
       onClick={handleClick}
-      className={`bg-green-light p-3 rounded-full w-fit h-fit mb-4 cursor-pointer transition duration-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-      <Arrow className="-rotate-90 h-10 w-10" />
+      className={`bg-green-light p-3 rounded-full w-fit h-fit mb-4 cursor-pointer transition duration-300 ${isVisible ? "pointer-events-auto opacity-100 translate-y-0" : "pointer-events-none opacity-0 translate-y-4"}`}>
+      <Arrow className="-rotate-90 h-8 w-8 md:h-10 md:w-10" />
     </button>
   )
 }
