@@ -1,0 +1,32 @@
+---
+import { Icon } from "astro-icon/components";
+import SearchBar from "./SearchBar.astro";
+
+interface Props {
+  initialMediaSelected?: "video" | "photo";
+}
+
+const { initialMediaSelected = "photo" } = Astro.props;
+---
+
+<header
+  class="z-1000 fixed top-0 left-0 w-full bg-white border-b-1 border-gray-300"
+>
+  <nav class="flex justify-center w-full h-20">
+    <div class="w-full max-w-[1550px] flex items-center px-8">
+      <div class="flex-1">
+        <a href="/" class="text-green-light font-bold text-3xl">Visualify</a>
+      </div>
+
+      <div class="w-250">
+        <SearchBar initialMediaSelected={initialMediaSelected} />
+      </div>
+
+      <div class="flex-1 flex justify-end">
+        <a href="https://github.com/zRyzeh/visualify" target="_blank">
+          <Icon class="h-8 w-8" name="github" color="black" />
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>

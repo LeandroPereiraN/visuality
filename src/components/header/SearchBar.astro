@@ -1,22 +1,79 @@
 ---
 import { Icon } from "astro-icon/components";
+
+interface Props {
+  initialMediaSelected?: "video" | "photo";
+}
+
+const { initialMediaSelected = "photo" } = Astro.props;
+const { search } = Astro.params;
 ---
 
 <form
   id="searchForm"
   role="search"
   autocomplete="off"
-  class="flex bg-white rounded-xl"
+  class="flex bg-[#f7f7f7] rounded-xl"
 >
+  <div class="relative group">
+    <button
+      type="button"
+      class="flex items-center gap-2 bg-white p-3 m-1 cursor-pointer rounded-xl hover:bg-gray-300 font-semibold transition-colors"
+    >
+      <Icon
+        id="typeIconPhoto"
+        class:list={["h-5 w-4", { hidden: initialMediaSelected !== "photo" }]}
+        name="photo"
+        color="gray"
+      />
+      <Icon
+        id="typeIconVideo"
+        class:list={["h-5 w-4", { hidden: initialMediaSelected !== "video" }]}
+        name="video"
+        color="gray"
+      />
+      <span id="selectedType" class="w-12"
+        >{initialMediaSelected == "photo" ? "Photos" : "Videos"}</span
+      >
+      <Icon
+        class="h-5 w-5 transition-transform duration-200 rotate-90 group-hover:-rotate-90"
+        name="arrow"
+        color="gray"
+      />
+    </button>
+
+    <div
+      class="bg-white absolute left-0 top-12 w-full rounded-2xl pointer-events-auto invisible opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-4 shadow-lg"
+    >
+      <div
+        class="menu-item flex items-center gap-2 hover:bg-gray-300 p-2 mx-1 mt-1 rounded-xl cursor-pointer font-semibold"
+        data-type="Photos"
+      >
+        <Icon name="photo" class="w-5 h-4" color="gray" />
+        Photos
+      </div>
+
+      <div
+        class="menu-item flex items-center gap-2 hover:bg-gray-300 p-2 mx-1 mb-1 rounded-xl cursor-pointer font-semibold"
+        data-type="Videos"
+      >
+        <Icon name="video" class="w-5 h-5" color="gray" />
+        Videos
+      </div>
+    </div>
+  </div>
+
   <input
     id="inputSearch"
     type="text"
-    placeholder="Search"
-    class="w-full placeholder:text-gray-400 placeholder:font-semibold focus:outline-none px-4"
+    placeholder="Search for free photos"
+    value={search}
+    class="w-full placeholder:text-gray-400 placeholder:font-semibold focus:outline-none px-4 bg-transparent font-semibold"
   />
+
   <button
     id="btnSearch"
-    class="p-3 m-1 cursor-pointer rounded-xl hover:bg-gray-300"
+    class="p-3 m-1 cursor-pointer rounded-xl hover:bg-gray-300 transition-colors"
     type="submit"
   >
     <Icon class="h-6 w-6" name="search" color="#045E66" />
@@ -24,24 +81,44 @@ import { Icon } from "astro-icon/components";
 </form>
 
 <script>
-  const form = document.querySelector<HTMLFormElement>("#searchForm");
-  const inputSearch = document.querySelector<HTMLInputElement>("#inputSearch");
+  const form = document.getElementById("searchForm") as HTMLFormElement;
+  const inputSearch = document.getElementById(
+    "inputSearch",
+  ) as HTMLInputElement;
+  const typeIconPhoto = document.getElementById("typeIconPhoto") as HTMLElement;
+  const typeIconVideo = document.getElementById("typeIconVideo") as HTMLElement;
+  const selectedType = document.getElementById(
+    "selectedType",
+  ) as HTMLSpanElement;
 
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
+  type media = "Videos" | "Photos";
 
-    const searchQuery = inputSearch?.value.trim();
-    if (!searchQuery) return;
+  document.querySelectorAll<HTMLDivElement>(".menu-item").forEach((item) => {
+    item.addEventListener("click", () => {
+      const type = item.dataset.type as media;
 
-    const currentPath = window.location.pathname;
-    let searchPath = "/search/";
+      if (type === "Photos") {
+        typeIconPhoto.classList.remove("hidden");
+        typeIconVideo.classList.add("hidden");
+      } else {
+        typeIconPhoto.classList.add("hidden");
+        typeIconVideo.classList.remove("hidden");
+      }
 
-    if (currentPath.startsWith("/videos")) {
-      searchPath = "/videos/search/";
-    } else {
-      searchPath = "/search/";
-    }
+      selectedType.textContent = type;
+      inputSearch.placeholder = `Search for free ${type.toLowerCase()}`;
+    });
 
-    window.location.href = `${searchPath}${encodeURIComponent(searchQuery)}`;
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const searchQuery = inputSearch.value.trim();
+
+      if (!searchQuery) return;
+
+      const searchType = selectedType.textContent;
+      const basePath = searchType === "Videos" ? "/videos/search/" : "/search/";
+
+      window.location.href = `${basePath}${encodeURIComponent(searchQuery)}`;
+    });
   });
 </script>
