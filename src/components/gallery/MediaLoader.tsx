@@ -11,7 +11,7 @@ interface MediaLoaderProps {
 }
 
 export const MediaLoader = ({ loadMore, isLoading, hasMore, error, page }: MediaLoaderProps) => {
-  const loaderRef = useInfiniteScroll(loadMore, isLoading, hasMore);
+  const loaderRef = useInfiniteScroll(loadMore, isLoading, hasMore, error);
 
   return (
     <div

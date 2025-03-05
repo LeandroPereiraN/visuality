@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export const useInfiniteScroll = (loadMore: () => void, isLoading: boolean, hasMore: boolean) => {
+export const useInfiniteScroll = (loadMore: () => void, isLoading: boolean, hasMore: boolean, error: boolean) => {
   const loaderRef = useRef<HTMLDivElement>(null);
   const isLoadingRef = useRef(isLoading);
   isLoadingRef.current = isLoading;
@@ -8,7 +8,7 @@ export const useInfiniteScroll = (loadMore: () => void, isLoading: boolean, hasM
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !isLoadingRef.current && hasMore) {
+        if (entries[0].isIntersecting && !isLoadingRef.current && hasMore && !error) {
           loadMore();
         }
       },
