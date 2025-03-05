@@ -76,6 +76,7 @@ const { search } = Astro.params;
   />
 
   <button
+    id=`btnSearch-${instanceId}`
     class="p-3 m-1 cursor-pointer rounded-xl hover:bg-gray-300 active:bg-gray-300 transition-colors"
     type="submit"
   >
@@ -84,8 +85,6 @@ const { search } = Astro.params;
 </form>
 
 <script is:inline define:vars={{ instanceId }}>
-  console.log(instanceId);
-
   const form = document.getElementById(`searchForm-${instanceId}`);
   const inputSearch = document.getElementById(`inputSearch-${instanceId}`);
   const typeIconPhoto = document.getElementById(`typeIconPhoto-${instanceId}`);
@@ -97,10 +96,22 @@ const { search } = Astro.params;
   const dropdownButton = document.getElementById(
     `dropdownButton-${instanceId}`,
   );
+  const btnSearch = document.getElementById(`btnSearch-${instanceId}`);
+
+  inputSearch.addEventListener("focus", function () {
+    const length = inputSearch.value.length;
+    inputSearch.setSelectionRange(length, length);
+  });
+
+  btnSearch.addEventListener("click", () => {
+    inputSearch.focus();
+  });
 
   dropdownButton.addEventListener("click", (e) => {
     e.stopPropagation();
+
     dropdownContainer.classList.toggle("active");
+    inputSearch.focus();
   });
 
   document.addEventListener("click", (e) => {
@@ -126,6 +137,7 @@ const { search } = Astro.params;
 
       selectedType.textContent = type;
       inputSearch.placeholder = `Search for free ${type.toLowerCase()}`;
+      inputSearch.focus();
     });
   });
 
