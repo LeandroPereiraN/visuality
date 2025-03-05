@@ -2,25 +2,30 @@
 import MainLayout from "@layouts/MainLayout.astro";
 import { Gallery } from "@components/gallery/Gallery";
 import SecondaryHeader from "@components/header/SecondaryHeader.astro";
+import Footer from "@components/Footer/Footer.astro";
 ---
 
 <MainLayout>
-  <SecondaryHeader />
+  <main class="min-h-screen">
+    <SecondaryHeader />
 
-  <section class="flex gap-8 justify-center p-8 pt-28">
-    <a href="/" class="px-5 py-2 text-gray-600 text-lg font-semibold">
-      Photos
-    </a>
-    <a href="/videos" class="px-5 py-2 text-gray-600 text-lg font-semibold">
-      Videos
-    </a>
-    <a
-      href="/favorites"
-      class="px-5 py-2 text-white text-lg bg-black/90 rounded-3xl font-semibold"
-    >
-      Favorites
-    </a>
-  </section>
+    <section class="flex gap-8 justify-center p-8">
+      <a href="/" class="px-5 py-2 text-gray-600 text-lg font-semibold">
+        Photos
+      </a>
+      <a href="/videos" class="px-5 py-2 text-gray-600 text-lg font-semibold">
+        Videos
+      </a>
+      <a
+        href="/favorites"
+        class="px-5 py-2 text-white text-lg bg-black/90 rounded-3xl font-semibold"
+      >
+        Favorites
+      </a>
+    </section>
 
-  <Gallery mediaItem="Favorites" client:load />
+    <Gallery mediaItem="Favorites" client:load />
+  </main>
+
+  <Footer />
 </MainLayout>

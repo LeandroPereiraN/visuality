@@ -13,22 +13,22 @@ const { search } = Astro.params;
   id="searchForm"
   role="search"
   autocomplete="off"
-  class="flex bg-[#f7f7f7] rounded-xl"
+  class="flex bg-gray-100 rounded-xl"
 >
   <div class="relative group">
     <button
       type="button"
-      class="flex items-center gap-2 bg-white p-3 m-1 cursor-pointer rounded-xl hover:bg-gray-300 font-semibold transition-colors"
+      class="flex items-center gap-2 bg-white p-3 m-1 cursor-pointer rounded-xl hover:bg-gray-300 group-hover:bg-gray-100 font-semibold transition-colors"
     >
       <Icon
         id="typeIconPhoto"
-        class:list={["h-5 w-4", { hidden: initialMediaSelected !== "photo" }]}
+        class:list={["h-4 w-5", { hidden: initialMediaSelected !== "photo" }]}
         name="photo"
         color="gray"
       />
       <Icon
         id="typeIconVideo"
-        class:list={["h-5 w-4", { hidden: initialMediaSelected !== "video" }]}
+        class:list={["h-5 w-5", { hidden: initialMediaSelected !== "video" }]}
         name="video"
         color="gray"
       />
@@ -42,23 +42,25 @@ const { search } = Astro.params;
       />
     </button>
 
-    <div
-      class="bg-white absolute left-0 top-12 w-full rounded-2xl pointer-events-auto invisible opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-4 shadow-lg"
-    >
+    <div class="absolute left-0 top-12 w-full px-1">
       <div
-        class="menu-item flex items-center gap-2 hover:bg-gray-300 p-2 mx-1 mt-1 rounded-xl cursor-pointer font-semibold"
-        data-type="Photos"
+        class="bg-white rounded-2xl pointer-events-auto invisible opacity-0 transition-all duration-200 -translate-y-4 group-hover:opacity-100 group-hover:visible group-hover:translate-y-3 shadow-lg p-0.5"
       >
-        <Icon name="photo" class="w-5 h-4" color="gray" />
-        Photos
-      </div>
+        <div
+          class="menu-item flex items-center gap-2 hover:bg-gray-300 p-2 mx-1 mt-1 rounded-xl cursor-pointer font-semibold"
+          data-type="Photos"
+        >
+          <Icon name="photo" class="w-5 h-4" color="gray" />
+          Photos
+        </div>
 
-      <div
-        class="menu-item flex items-center gap-2 hover:bg-gray-300 p-2 mx-1 mb-1 rounded-xl cursor-pointer font-semibold"
-        data-type="Videos"
-      >
-        <Icon name="video" class="w-5 h-5" color="gray" />
-        Videos
+        <div
+          class="menu-item flex items-center gap-2 hover:bg-gray-300 p-2 mx-1 mb-1 rounded-xl cursor-pointer font-semibold"
+          data-type="Videos"
+        >
+          <Icon name="video" class="w-5 h-5" color="gray" />
+          Videos
+        </div>
       </div>
     </div>
   </div>
