@@ -1,5 +1,14 @@
 ---
 import "../styles/global.css";
+
+interface Props {
+	title: string;
+	description: string;
+	image?: string;
+}
+
+const { title, description, image } = Astro.props;
+const currentUrl = Astro.request.url;
 ---
 
 <!doctype html>
@@ -7,9 +16,33 @@ import "../styles/global.css";
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="referrer" content="no-referrer-when-downgrade" />
+
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="canonical" href={currentUrl} />
+
 		<meta name="generator" content={Astro.generator} />
-		<title>Visualify</title>
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta
+			name="keywords"
+			content="free images, free videos, high-quality photos, royalty-free images, stock photos, Pexels API, download images, download videos, free stock videos, HD photos, free media, photography resources"
+		/>
+
+		<meta name="author" content="Leandro Pereira" />
+		<meta name="robots" content="index, follow" />
+
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={currentUrl} />
+		{image && <meta property="og:image" content={image} />}
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		{image && <meta name="twitter:image" content={image} />}
 	</head>
 	<body>
 		<slot />
