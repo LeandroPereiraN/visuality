@@ -10,20 +10,20 @@ interface MediaGridProps {
 export const MediaMasonry = ({ media }: MediaGridProps) => (
   <Masonry
     breakpointCols={{
-      default: 3,
+      default: 4,
+      1280: 3,
       1024: 2,
       640: 1
     }}
     className="flex -ml-4 w-screen max-w-[1550px] px-6"
-    columnClassName="pl-4"
+    columnClassName="pl-4 bg-clip-padding"
   >
     {media.map((m) => (
-      <div key={`${m.mediaItem}-${m.id}`} className="mb-4">
-        {
-          m.mediaItem === "Photos"
-            ? <Photo photo={m} />
-            : <Video video={m} />
-        }
+      <div
+        key={`${m.mediaItem}-${m.id}`}
+        className="mb-4"
+      >
+        {m.mediaItem === "Photos" ? <Photo photo={m} /> : <Video video={m} />}
       </div>
     ))}
   </Masonry>

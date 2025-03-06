@@ -34,13 +34,15 @@ const { initialMediaSelected = "photo" } = Astro.props;
       <div class="flex flex-1 gap-2 items-center justify-end">
         <button
           id="btnMobileSearch"
-          class="p-1 cursor-pointer rounded-full hover:bg-gray-300 transition-colors md:hidden"
           type="button"
+          aria-label="Search"
+          class="p-1 cursor-pointer rounded-full hover:bg-gray-300 transition-colors md:hidden"
         >
           <Icon class="h-9 w-9" name="search" color="black" />
         </button>
 
         <a
+          aria-label="Go to code"
           class="p-1 transition-colors duration-150 hover:bg-gray-200 active:scale-95 rounded-full"
           href="https://github.com/zRyzeh/visualify"
           target="_blank"

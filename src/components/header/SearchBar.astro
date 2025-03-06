@@ -78,8 +78,9 @@ const { search } = Astro.params;
 
   <button
     id=`btnSearch-${instanceId}`
-    class="p-3 m-1 cursor-pointer rounded-xl hover:bg-gray-300 active:bg-gray-300 transition-colors"
+    aria-label="Search"
     type="submit"
+    class="p-3 m-1 cursor-pointer rounded-xl hover:bg-gray-300 active:bg-gray-300 transition-colors"
   >
     <Icon class="h-6 w-6" name="search" color="gray" />
   </button>

@@ -21,6 +21,7 @@ const { initialMediaSelected = "photo" } = Astro.props;
     alt="Scene of the ocean floor with dark waters"
     class="absolute w-full h-full object-cover -z-1000"
     fetchpriority="high"
+    loading="eager"
   />
 
   <nav class="flex justify-center w-full h-20 border-b-1 border-white/50">
@@ -28,6 +29,7 @@ const { initialMediaSelected = "photo" } = Astro.props;
       <a href="/" class="text-white font-bold text-3xl">Visualify</a>
       <div class="flex flex-1 justify-end">
         <a
+          aria-label="Go to code"
           class="p-1 hover:bg-gray-500 transition-colors duration-150 active:scale-95 rounded-full"
           href="https://github.com/zRyzeh/visualify"
           target="_blank"

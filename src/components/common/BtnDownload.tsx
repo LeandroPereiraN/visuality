@@ -27,6 +27,8 @@ export const BtnDownload = ({ url }: BtnDownloadProps) => {
 
   return (
     <button
+      type="button"
+      aria-label="Download"
       onClick={handleDownload}
       className="text-white md:bg-black/90 md:hover:bg-[#2a2a2a] transition-colors duration-150 font-semibold p-1.5 md:px-4 rounded-md cursor-pointer md:outline-2 outline-white -outline-offset-1 flex items-center gap-1 active:scale-95"
     >
